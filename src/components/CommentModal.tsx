@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useState,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import type { Blog } from "../scipts";
 import { Context } from "./context";
 
@@ -44,46 +39,52 @@ const CommentModal: React.FC<ModalProps> = ({ blogToComment }) => {
   const handleInpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentPost(e.target.value);
   };
-
-  return (
-    <div className="absolute top-0 w-[100vw] h-[100vh] flex items-center justify-center">
-      <div className="bg-[#17202A] min-h-[400px] shadow shadow-[#f5f5f5] p-10 rounded-[20px] flex flex-col">
-        <h1 className="text-center text-3xl font-semibold mb-4">COMMENT</h1>
-        <div className="border-2 rounded">
-          <input
-            type="text"
-            value={commentPost}
-            onChange={handleInpChange}
-            placeholder="Enter comment..."
-            className="font-medium p-2 outline-none rounded  bg-transparent border-white"
-            ref={inpRef}
-          />
-          <button
-            onClick={handleCommentPost}
-            className="bg-blue-500 h-full border-2 border-blue-500 rounded-l px-2"
-          >
-            Comment
-          </button>
-        </div>
+return (
+  <div className="absolute top-0 w-[100vw] min-h-screen overflow-y-auto bg-black/50">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+        bg-[#17202A] min-h-[400px] max-h-[90vh] overflow-y-auto shadow py-10 px-3 rounded-[20px] 
+        flex flex-col sm:w-[90vw] md:w-[500px]">
+      <h1 className="text-center text-3xl font-semibold mb-4 text-white">COMMENT</h1>
+      
+      <div className="flex items-center">
+        <input
+          type="text"
+          value={commentPost}
+          onChange={handleInpChange}
+          placeholder="Enter comment..."
+          className="font-medium p-2 outline-none w-[80%] bg-transparent border-white text-white"
+          ref={inpRef}
+        />
         <button
-          onClick={() => setWantsToComment(false)}
-          className="absolute bottom-0 mb-10 z-20 block mx-auto"
+          onClick={handleCommentPost}
+          className="bg-blue-500 h-full text-white border-2 border-blue-500 rounded-l px-2"
         >
-          Cancel Action
+          Comment
         </button>
+      </div>
+
+      <button
+        onClick={() => setWantsToComment(false)}
+        className="mt-6 text-red-400 underline mx-auto"
+      >
+        Cancel Action
+      </button>
+
+      <div className="mt-6 space-y-4">
         {updateBlog?.comments.length === 0 ? (
-          <p className="text-center mt-10">Comment box is currently empty</p>
+          <p className="text-center mt-10 text-white">Comment box is currently empty</p>
         ) : (
           updateBlog?.comments.map((comment, i) => (
-            <div key={i} className="mt-2">
+            <div key={i}>
               <p className="text-[12px] text-gray-300">@{updateBlog.username}</p>
-              <p className="text-[16px]">{comment}</p>
+              <p className="text-[16px] text-white">{comment}</p>
             </div>
           ))
         )}
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default CommentModal;
